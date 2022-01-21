@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<component name="ReactVoiceTextEditBox" extends="VoiceTextEditBox">
+
+  <interface>
+    <field id="isReactComponent" type="boolean" value="true" />
+    <field id="itemContent" type="node" />
+    <field id="props" type="assocarray" />
+    <function name="unmountComponent" />
+  </interface>
+
+  <script type="text/brightscript" uri="react.brs" />
+
+</component>
+
