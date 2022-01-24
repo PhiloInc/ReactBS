@@ -1,8 +1,8 @@
 sub init()
-  m.components = {}
-  m.props = {}
-  m.state = {}
-  m.virtualTree = {}
+  m.reactComponents = {}
+  m.reactProps = {}
+  m.reactState = {}
+  m.reactVirtualTree = {}
 
   m.top.observeField("itemContent", "reactComponentOnChangeItemContent")
   m.top.observeField("props", "reactComponentOnChangeProps")
@@ -41,16 +41,16 @@ end sub
 
 sub mapFieldsToProps(props = [] as object)
   for each prop in props
-    m.props[prop] = m.top[prop]
+    m.reactProps[prop] = m.top[prop]
     m.top.observeField(prop, "reactComponentOnChangeField")
   end for
 end sub
 
 sub setState(state = {} as object)
-  prevState = m.state
-  m.state = reactSetData(m.state, state)
+  prevState = m.reactState
+  m.reactState = reactSetData(m.reactState, state)
   reactRender()
-  componentDidUpdate(m.props, prevState)
+  componentDidUpdate(m.reactProps, prevState)
 end sub
 
 ' Internal
@@ -81,13 +81,13 @@ function reactGetComponent(componentID = "" as string) as dynamic
   component = invalid
   if componentID = "top"
     component = m.top
-  else if m.components[componentID] <> invalid
-    component = m.components[componentID]
+  else if m.reactComponents[componentID] <> invalid
+    component = m.reactComponents[componentID]
   else
     component = m.top.findNode(componentID)
   end if
   ' Cache component
-  if component <> invalid then m.components[componentID] = component
+  if component <> invalid then m.reactComponents[componentID] = component
   return component
 end function
 
@@ -97,7 +97,7 @@ sub reactRender()
     ' Rendered exclusively by side effect
     return
   end if
-  m.virtualTree = virtualTree
+  m.reactVirtualTree = virtualTree
   for each componentID in virtualTree
     componentProps = virtualTree[componentID]
     component = reactGetComponent(componentID)
@@ -129,11 +129,11 @@ function reactSetData(prevData = {} as object, data = invalid as dynamic)
 end function
 
 sub reactSetProps(props = {} as object)
-  nextProps = reactSetData(m.props, props)
-  prevProps = m.props
-  m.props = nextProps
+  nextProps = reactSetData(m.reactProps, props)
+  prevProps = m.reactProps
+  m.reactProps = nextProps
   if shouldComponentUpdate(nextProps)
     reactRender()
-    componentDidUpdate(prevProps, m.state)
+    componentDidUpdate(prevProps, m.reactState)
   end if
 end sub
