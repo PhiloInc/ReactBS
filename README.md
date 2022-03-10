@@ -1,4 +1,4 @@
-<h1 align="center">ReactBrightScript</h1>
+<h1 align="center">ReactBS</h1>
 
 <div align="center">
 	React-like framework for Roku
@@ -18,5 +18,5 @@ This framework is in beta. Future changes to the framework may not be backwards 
 
 
 ## License
-ReactBrightScript is licensed under the
+ReactBS is licensed under the
 MIT License. See [LICENSE.txt](LICENSE.txt) for details.
